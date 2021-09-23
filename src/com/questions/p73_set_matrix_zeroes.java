@@ -7,11 +7,13 @@ public class p73_set_matrix_zeroes {
     public static void main(String[] args) {
 //        Input: matrix = [[1,1,1],[1,0,1],[1,1,1]]
 //        Output: [[1,0,1],[0,0,0],[1,0,1]]
-        int[][] matrix = {{2, 0, 2},{2, 0, 2},{2, 1, 2}};
+        int[][] matrix = {{1, 1, 1},{1, 0, 1},{1, 1, 1},{1, 1, 1}};
         setZeroes(matrix);
 //        System.out.println(Arrays.toString(matrix)); // outputs [[I@e9e54c2, [I@65ab7765, [I@1b28cdfa]
 //        System.out.println(Arrays.deepToString(matrix)); // but deep produces precise result.
-
+        for (int[] i : matrix) {
+            System.out.println(Arrays.toString(i));
+        }
     }
 
     /**
@@ -37,8 +39,22 @@ public class p73_set_matrix_zeroes {
             }
         }
 
-        System.out.println(Arrays.toString(newrow));
-        System.out.println(Arrays.toString(newcol));
+        for (int i = 0; i < col; i++) {
+            for (int j = 0; j < row; j++) {
+                if(newcol[i] == 1){// the problem was here
+                    matrix[j][i] = 0;
+                }
+            }
+        }
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if(newrow[i] == 1){// the problem was here
+                    matrix[i][j] = 0;
+                }
+            }
+        }
 
+//        System.out.println(Arrays.toString(newrow));
+//        System.out.println(Arrays.toString(newcol));
     }
 }
