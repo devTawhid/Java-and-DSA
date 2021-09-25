@@ -12,6 +12,7 @@ public class p566_Reshape_the_Matrix {
     /**
      * a function to reshape matrix using original data
      * link: https://leetcode.com/problems/reshape-the-matrix/
+     * @author: Sultanul Arafean Tawhid
      * @param mat: the matrix need to be reshaped
      * @param r: desired row number
      * @param c: desired col number

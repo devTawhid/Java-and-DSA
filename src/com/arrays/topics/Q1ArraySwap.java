@@ -1,4 +1,4 @@
-package com.arrays.questions;
+package com.arrays.topics;
 
 import java.util.Arrays;
 
