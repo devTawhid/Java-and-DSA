@@ -27,21 +27,16 @@ public class p1886_Determine_Whether_Matrix_Can_Be_Obtained_By_Rotation {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 // 90 * 0 degree
-                if(mat[i][j] != target[i][j]) test1 = false;
+                if(target[i][j] != mat[i][j]) test1 = false;
                 // 90 * 1 degree
-                if(mat[i][j] != target[j][n - 1 - i]) test2 = false;
+                if(target[i][j] != mat[j][n - 1 - i]) test2 = false;
                 // 90 * 2 degree
-                if(mat[i][j] != target[n - 1 - i][n - 1 - j]) test3 = false;
+                if(target[i][j] != mat[n - 1 - i][n - 1 - j]) test3 = false;
                 // 90 * 3 degree
-                if(mat[i][j] != target[n - 1 - j][i]) test4 = false;//copied
+                if(target[i][j] != mat[n - 1 - j][i]) test4 = false;//copied
             }
         }
 
         return test1 || test2 || test3 || test4;
     }
 }
-//[[1, 1],
-// [0, 1]]
-
-//[[1, 1],
-// [1, 0]]
