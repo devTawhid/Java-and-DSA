@@ -24,10 +24,10 @@ public class binarySearch {
 
             if (arr[mid] < target) {
                 // sets new start according to the changed mid
-                start = mid;
+                start = mid + 1;
             } else if (arr[mid] > target) {
                 // sets new end according to the changed mid
-                end = mid;
+                end = mid - 1;
                 // returns the index if found
             } else return mid;
         }
