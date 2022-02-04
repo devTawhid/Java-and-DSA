@@ -1,11 +1,13 @@
 package com.qString;
 
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 public class p1859SortingtheSentence {
     public static void main(String[] args) {
         String s = "Myself2 Me1 I4 and3";
-        System.out.println(sortSentence(s));
+        System.out.println(sortSentence_(s));
     }
 
     // 1st one
@@ -19,6 +21,14 @@ public class p1859SortingtheSentence {
         return String.join(" ", ans);
     }
 
+    // 2nd one
+    static String sortSentence_(String s) {
+        return Arrays
+                .stream(s.split(" "))
+                .sorted(Comparator.comparingInt(word -> word.charAt(word.length() - 1)))
+                .map(word -> word.substring(0, word.length() - 1))
+                .collect(Collectors.joining(" "));
+    }
     static String sortSentence_testing(String s) {
         StringBuilder str = new StringBuilder();
 //        for (int i = 0; i < s.length(); i++) {
