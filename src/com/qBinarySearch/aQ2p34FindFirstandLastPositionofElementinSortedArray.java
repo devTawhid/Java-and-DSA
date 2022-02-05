@@ -7,7 +7,7 @@ public class aQ2p34FindFirstandLastPositionofElementinSortedArray {
         int[] nums = {5,7,7,8,8,10};
         int target = 8;
 //        searchRange(nums, target);
-        System.out.println(Arrays.toString(searchRange(nums, target)));
+        System.out.println(Arrays.toString(searchRange_(nums, target)));
     }
 
     static int[] searchRange(int[] nums, int target) {
@@ -18,7 +18,6 @@ public class aQ2p34FindFirstandLastPositionofElementinSortedArray {
         }
         return result;
     }
-
     static int findFirstInx(int[] nums, int target, boolean findFirst) {
         int index = -1;
         int start = 0;
@@ -35,5 +34,30 @@ public class aQ2p34FindFirstandLastPositionofElementinSortedArray {
             }
         }
         return index;
+    }
+
+    // practice #1
+    static int[] searchRange_(int[] nums, int target) {
+        int[] res = new int[2];
+        res[0] = findFirstIndex(nums, 8, true);
+        res[1] = findFirstIndex(nums, 8, false);
+        return res;
+    }
+    static int findFirstIndex(int[] nums, int target, boolean findFirst) {
+        int start = 0, end = nums.length;
+        while (start <= end) {
+            int mid = (start + end) >> 1;
+            if(target > nums[mid])
+                start = mid + 1;
+            else if(target < nums[mid])
+                end = mid - 1;
+            else{
+                if(findFirst)
+                    end = mid - 1;
+                else
+                    start = mid + 1;
+            }
+        }
+        return findFirst ? start: end;
     }
 }
