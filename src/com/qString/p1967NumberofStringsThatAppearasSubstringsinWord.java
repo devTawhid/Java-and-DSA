@@ -1,7 +1,5 @@
 package com.qString;
 
-import java.util.ArrayList;
-
 public class p1967NumberofStringsThatAppearasSubstringsinWord {
     public static void main(String[] args) {
         String[] patterns = {"a", "abc", "bc", "d"};

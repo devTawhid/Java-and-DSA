@@ -15,7 +15,7 @@ public class sorting {
 //        int[] arr = {3,5,2,1,3};                       //misMatch
 //        int[] arr = {3,2,5,1,-1};                       //find missing positive
         int[] arr = {6,5,4,8,4,5,3,4,-5,-4};
-        System.out.println(Arrays.toString(countingSort__(arr)));
+        System.out.println(Arrays.toString(countingSort___(arr)));
     }
 
     //cyclic sort
@@ -115,6 +115,32 @@ public class sorting {
         System.out.println(Arrays.toString(temp));
 
         for (int i = 0; i < arr2.length; i++) {
+            temp[arr[i] - shift]--;
+            arr2[temp[arr[i] - shift]] = arr[i];
+        }
+        return arr2;
+    }
+
+    // practice #3 counting sort
+    static int[] countingSort___(int[] arr) {
+        int minVal = arr[0];
+        int maxVal = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            minVal = Math.min(minVal, arr[i]);
+            maxVal = Math.max(maxVal, arr[i]);
+        }
+        int shift = minVal;
+        int[] temp = new int[maxVal - minVal + 1];
+        for (int i = 0; i < arr.length; i++) {
+            temp[arr[i] - shift]++;
+        }
+
+        for (int i = 1; i < temp.length; i++) {
+            temp[i] = temp[i] + temp[i - 1];
+        }
+
+        int[] arr2 = new int[arr.length];
+        for (int i = 0; i < arr.length; i++) {
             temp[arr[i] - shift]--;
             arr2[temp[arr[i] - shift]] = arr[i];
         }
