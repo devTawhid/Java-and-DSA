@@ -5,6 +5,8 @@
  * Time complexity: O(m + n) m -> the string where we are searching
  *                           n -> the pattern we are searching
  *
+ * practice #1: 07-02-22
+ *
  */
 // TODO: 06-Feb-22 => KMP substring search.
 package com.qString;
@@ -18,7 +20,7 @@ public class p28ImplementstrStr {
         long start = System.nanoTime();
 
         // code is running here;
-        strStr("aaaaa", "aa");
+        strStr_("abaxabaayabaababaabce", "abaabc");
 
         // calculating the time elapsed
         long end = System.nanoTime() - start;
@@ -27,7 +29,7 @@ public class p28ImplementstrStr {
         int nanoseconds = (int) (end % 1000000);
         System.out.printf("%ds %dms %dns \n", seconds, milliseconds, nanoseconds);
 
-        System.out.println(strStr("hello", "ll"));
+        System.out.println(strStr_("abaxabaayabaababaabce", "abaabc"));
 //        System.out.println(strStr("aaaaa", "aabaabaaa"));
     }
 
@@ -78,19 +80,45 @@ public class p28ImplementstrStr {
 
         return -1;
     }
-    static int strStrr(String heystack, String needle) {
-        int ans = -1, j = 0;
-        for(int i = 0; i < heystack.length(); i++) {
-            if(j < needle.length()) {
-                if(heystack.charAt(i) == needle.charAt(j)){
-                    j++;
-                    ans = i;
-                }else if(j > 0 && heystack.charAt(i) != needle.charAt(j))
-                    return -1;
-                else
-                    return -1;
+
+    // practice #1
+    static int[] computeTemporaryArray_(String pattern) {
+        int[] temp = new int[pattern.length()];
+        int i = 1, j = 0;
+        while (i < pattern.length() && j < pattern.length()) {
+            if(pattern.charAt(i) == pattern.charAt(j)) {
+                temp[i] = j + 1;
+                i++;
+                j++;
+            } else {
+                if(j != 0) {
+                    j = temp[j - 1];
+                } else {
+                    temp[i] = 0;
+                    i++;
+                }
             }
         }
-        return ans - needle.length() + 1;
+
+        return temp;
+    }
+
+    static int strStr_(String word, String pattern) {
+        int i = 0, j = 0;
+        int[] temp = computeTemporaryArray_(pattern);
+        while (i < word.length() && j < pattern.length()) {
+            if(j == pattern.length() - 1) {
+                return i - j;
+            }else if(word.charAt(i) == pattern.charAt(j)) {
+                i++;
+                j++;
+            }else {
+                if(j != 0)
+                    j = temp[j - 1];
+                else
+                    i++;
+            }
+        }
+        return -1;
     }
 }
