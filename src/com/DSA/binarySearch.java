@@ -8,6 +8,7 @@ public class binarySearch {
         char[] chars = {'c','f','j'};
         int[] firstLast = {1,1,1,2,3,3,3,3,3,5,7,8,9};
         int[] mountainArr = {1,3,5,4,2};
+        int[] rotatedArr = {4,5,6,7,0,1,2};
         int target = 25;
         int result = binarySearch(arr, 25);
         int ceil = ceil(arr, 20);
@@ -19,7 +20,8 @@ public class binarySearch {
 //        System.out.println(floor);
 //        System.out.println(ch);
 //        System.out.println(Arrays.toString(searchRange(firstLast,3)));
-        System.out.println(findInMountainArray(mountainArr, 5));
+//        System.out.println(findInMountainArray(mountainArr, 5));
+        System.out.println(searchInRotatedArray(rotatedArr, 0));
     }
 
     static int binarySearch(int[] arr, int target) {
@@ -184,7 +186,7 @@ public class binarySearch {
         //fInMouHelper(arr,target,0,end) != -1? fInMouHelper(arr,target,0,end): fInMouHelper(arr,target,end+1,arr.length-1);
         return res;
     }
-    static int fInMouHelper(int[] arr, int target, int start, int end){
+    static int fInMouHelper(int[] arr, int target, int start, int end) {
         boolean isAsc = arr[start] < arr[end];
         while (start <= end){
             int mid = start + (end - start) / 2;
@@ -197,6 +199,73 @@ public class binarySearch {
                 if(arr[mid] < target) end = mid - 1;
                 else start = mid + 1;
             }
+        }
+        return -1;
+    }
+
+    //question 8: Search in Rotated Sorted Array
+    // TODO: 08-Feb-22 => this part is specially important. It uses the concept of wrap around so check it again and again.
+    //                    this code will TEACH YOU A LOT.(to future me)
+    static int searchInRotatedArray(int[] arr, int target) {
+        int start = 0, end = arr.length - 1;
+        //finding the rotation
+        while (start < end) {
+            int mid = (start + end) >> 1;
+            if(arr[mid] > arr[end])
+                start = mid + 1;
+            else
+                end = mid;
+        }
+        int rot = end;
+        start = 0;
+        end = arr.length - 1;
+        //actual binary search
+        while (start <= end) {
+            int mid = (start + end) >> 1;
+            int readmid = (mid + rot) % arr.length; // wrap around
+            if(arr[readmid] == target)
+                return readmid;
+            else if(arr[readmid] < target)
+                start = mid + 1;
+            else if(arr[readmid] > target)
+                end = mid - 1;
+        }
+        return -1;
+    }
+
+    // Another solution. Not so good solution....
+    // to run the other two function below
+    public int search(int[] nums, int target) {
+        int pivot = pivot(nums);
+        // case 1
+        if(pivot == -1) return binarySearch(nums, target, 0, nums.length - 1);
+        // case 2
+        if(target == nums[pivot]) return pivot;
+        // case 3
+        if(target < nums[0]) return binarySearch(nums, target, pivot + 1, nums.length - 1);
+        // case 4
+        return binarySearch(nums, target, 0, pivot - 1);
+    }
+    // finding the pivot
+    public int pivot(int[] nums) {
+        int start = 0;
+        int end = nums.length - 1;
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+            if(mid < end && nums[mid] > nums[mid + 1]) return mid;
+            if(mid > start && nums[mid] < nums[mid - 1]) return mid - 1;
+            if(nums[mid] <= nums[start]) end = mid - 1;
+            if(nums[mid] >= nums[start]) start = mid + 1;
+        }
+        return -1;
+    }
+    // the actual search is happening
+    public int binarySearch(int[] nums, int target, int start, int end) {
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+            if(nums[mid] == target) return mid;
+            if(nums[mid] < target) start = mid + 1;
+            if(nums[mid] > target) end = mid - 1;
         }
         return -1;
     }
