@@ -20,7 +20,7 @@ public class p28ImplementstrStr {
         long start = System.nanoTime();
 
         // code is running here;
-        strStr_("abaxabaayabaababaabce", "abaabc");
+        strStr__("abaxabaayabaababaabce", "abaabc");
 
         // calculating the time elapsed
         long end = System.nanoTime() - start;
@@ -29,7 +29,7 @@ public class p28ImplementstrStr {
         int nanoseconds = (int) (end % 1000000);
         System.out.printf("%ds %dms %dns \n", seconds, milliseconds, nanoseconds);
 
-        System.out.println(strStr_("abaxabaayabaababaabce", "abaabc"));
+        System.out.println(strStr__("abaxabaayabaababaabce", "abaabc"));
 //        System.out.println(strStr("aaaaa", "aabaabaaa"));
     }
 
@@ -54,7 +54,6 @@ public class p28ImplementstrStr {
         }
         return temp;
     }
-
     static int strStr(String heystack, String needle) {
         if(heystack.length() == 0 && needle.length() == 0)
             return 0;
@@ -102,7 +101,6 @@ public class p28ImplementstrStr {
 
         return temp;
     }
-
     static int strStr_(String word, String pattern) {
         int i = 0, j = 0;
         int[] temp = computeTemporaryArray_(pattern);
@@ -117,6 +115,45 @@ public class p28ImplementstrStr {
                     j = temp[j - 1];
                 else
                     i++;
+            }
+        }
+        return -1;
+    }
+
+    // practice #2
+    static int[] computeTemporaryArray__(String pattern) {
+        int[] arr = new int[pattern.length()];
+        int i = 1, j = 0;
+        while (i < pattern.length()) {
+            if(arr[i] == arr[j]){
+                i++;
+                j++;
+            } else {
+                if(j > 0)
+                    j = arr[j-1];
+                else {
+                    arr[i] = 0;
+                    i++;
+                }
+            }
+        }
+        return arr;
+    }
+    static int strStr__(String word, String pattern) {
+        int[] temp = computeTemporaryArray__(pattern);
+        int i = 0,j = 0;
+        while (i < word.length() && j < pattern.length()) {
+            if(j == pattern.length() - 1)
+                return i-j;
+            else if(word.charAt(i) == pattern.charAt(j)) {
+                i++;
+                j++;
+            } else {
+                if(j > 0) {
+                    j = temp[j-1];
+                } else {
+                    i++;
+                }
             }
         }
         return -1;
