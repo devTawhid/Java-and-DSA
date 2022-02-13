@@ -1,7 +1,5 @@
 package com.DSA;
 
-import java.util.Arrays;
-
 public class binarySearch {
     public static void main(String[] args) {
         int[] arr = {1, 2, 3, 5, 9, 10, 15, 25, 50, 100, 200};
@@ -10,6 +8,7 @@ public class binarySearch {
         int[] mountainArr = {1,3,5,4,2};
         int[] rotatedArr = {4,5,6,7,0,1,2};
         int target = 25;
+        int[] numsDup = {2,2,1,2,2,2,2,2,2,2,2,2,2,2};
         int result = binarySearch(arr, 25);
         int ceil = ceil(arr, 20);
         int floor = floor(arr, 20);
@@ -21,7 +20,8 @@ public class binarySearch {
 //        System.out.println(ch);
 //        System.out.println(Arrays.toString(searchRange(firstLast,3)));
 //        System.out.println(findInMountainArray(mountainArr, 5));
-        System.out.println(searchInRotatedArray(rotatedArr, 0));
+//        System.out.println(searchInRotatedArray(rotatedArr, 0));
+        System.out.println(searchInduplicated(numsDup));
     }
 
     static int binarySearch(int[] arr, int target) {
@@ -206,6 +206,7 @@ public class binarySearch {
     //question 8: Search in Rotated Sorted Array
     // TODO: 08-Feb-22 => this part is specially important. It uses the concept of wrap around so check it again and again.
     //                    this code will TEACH YOU A LOT.(to future me)
+    //link: https://leetcode.com/problems/search-in-rotated-sorted-array/discuss/14425/Concise-O(log-N)-Binary-search-solution
     static int searchInRotatedArray(int[] arr, int target) {
         int start = 0, end = arr.length - 1;
         //finding the rotation
@@ -216,6 +217,7 @@ public class binarySearch {
             else
                 end = mid;
         }
+
         int rot = end;
         start = 0;
         end = arr.length - 1;
@@ -235,7 +237,7 @@ public class binarySearch {
 
     // Another solution. Not so good solution....
     // to run the other two function below
-    public int search(int[] nums, int target) {
+    static int search(int[] nums, int target) {
         int pivot = pivot(nums);
         // case 1
         if(pivot == -1) return binarySearch(nums, target, 0, nums.length - 1);
@@ -247,7 +249,7 @@ public class binarySearch {
         return binarySearch(nums, target, 0, pivot - 1);
     }
     // finding the pivot
-    public int pivot(int[] nums) {
+    static int pivot(int[] nums) {
         int start = 0;
         int end = nums.length - 1;
         while (start <= end) {
@@ -260,7 +262,7 @@ public class binarySearch {
         return -1;
     }
     // the actual search is happening
-    public int binarySearch(int[] nums, int target, int start, int end) {
+    static int binarySearch(int[] nums, int target, int start, int end) {
         while (start <= end) {
             int mid = start + (end - start) / 2;
             if(nums[mid] == target) return mid;
@@ -268,5 +270,26 @@ public class binarySearch {
             if(nums[mid] > target) end = mid - 1;
         }
         return -1;
+    }
+
+    // TODO: 13-Feb-22 => 1st learned
+    
+    //rotated binary search in duplicated array
+    static int searchInduplicated(int[] nums) {
+        //valid for this case
+        //[6,7,8,9,10,11,12,13,14,1,2,3,4,5]
+        // |                      |
+        //finding the minimum value
+        int start = 0, end = nums.length-1;
+        while (start < end) {
+            int mid = (start+end) >> 1;
+            if(nums[mid] > nums[end])
+                start = mid+1;
+            else if(nums[mid] < nums[end])
+                end = mid;
+            else
+                end--;
+        }
+        return nums[end];
     }
 }
